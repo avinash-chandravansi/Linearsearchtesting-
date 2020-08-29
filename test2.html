@@ -1,0 +1,153 @@
+<html>
+  <head>
+    <script>
+      var arr = [45, 56, 67, 89, 67, 89, 67, 65];
+
+      function next() {
+        alert(
+          "You have entered the element " +
+            document.getElementById("enter").value +
+            " to find."
+        );
+
+        var startx = 100;
+        var starty = 50;
+        var fontx = 105;
+        var fonty = 100;
+        window.devicePixelRatio = 1;
+        var canvas = document.getElementById("board");
+        canvas.width = canvas.getBoundingClientRect().width;
+        canvas.height = canvas.getBoundingClientRect().height;
+        var ctx = canvas.getContext("2d");
+        for (var i = 0; i < 8; i++) {
+          ctx.strokeStyle = "rgba(0,0,0,1)";
+          ctx.strokeRect(startx, starty, 70, 70);
+          ctx.font = "50px Courier";
+          ctx.fillText(arr[i], fontx, fonty);
+          fontx = fontx + 70;
+          startx = startx + 70;
+        }
+        var startx = 100;
+        var starty = 50;
+        var fontx = 105;
+        var fonty = 100;
+        var time = 3000;
+        var j = 0;
+        var resultx = 105;
+        var resulty = 100;
+
+        for (var i = 0; i < 8; i++) {
+          setTimeout(() => {
+            ctx.strokeStyle = "blanchedalmond";
+            ctx.fillStyle = "blanchedalmond";
+            ctx.fillRect(startx - 71, starty + 79, 75, 75);
+            //   ctx.clearRect(startx, starty + 80, 70, 70);
+            ctx.strokeStyle = "rgba(0,0,0,1)";
+            ctx.strokeRect(startx, starty + 80, 70, 70);
+            ctx.fillStyle = "black";
+            ctx.font = "50px ";
+            ctx.fillText(
+              document.getElementById("enter").value,
+              fontx,
+              fonty + 80
+            );
+            ctx.clearRect(startx - 70, starty, 70, 70);
+            if (j != 0) {
+              ctx.fillStyle = "black";
+              ctx.font = "50px Courier";
+              ctx.fillText(arr[j - 1], fontx - 70, fonty);
+            }
+
+            ctx.fillStyle = "yellow";
+            ctx.fillRect(startx, starty, 70, 70);
+            ctx.strokeStyle = "rgba(0,0,0,1)";
+            ctx.strokeRect(startx, starty, 70, 70);
+            ctx.fillStyle = "black";
+            ctx.font = "50px ";
+            ctx.fillText(arr[j], fontx, fonty);
+
+            //here
+            document.getElementById("label1").innerHTML =
+              "Checking your element " +
+              document.getElementById("enter").value +
+              " against " +
+              arr[j];
+
+            if (arr[j] == document.getElementById("enter").value) {
+              document.getElementById("label2").innerHTML =
+                "Element found at position at : " + (j + 1);
+              document.getElementById("label2").style.color = "green";
+              clearInterval(interval);
+            } else if (j != 7) {
+              document.getElementById("label2").innerHTML =
+                "Checking (if element(" +
+                document.getElementById("enter").value +
+                "== " +
+                arr[j] +
+                ")     Condition Flase";
+              document.getElementById("label2").style.color = "red";
+            } else {
+              document.getElementById("label2").innerHTML =
+                document.getElementById("enter").value +
+                " not found in the array. ";
+              document.getElementById("label2").style.color = "red";
+            }
+            fontx = fontx + 70;
+            startx = startx + 70;
+            j = j + 1;
+          }, time);
+          time = time + 3000;
+        }
+      }
+      function execute() {
+        window.devicePixelRatio = 1;
+        var canvas = document.getElementById("board");
+        canvas.width = canvas.getBoundingClientRect().width;
+        canvas.height = canvas.getBoundingClientRect().height;
+        var ctx = canvas.getContext("2d");
+        //  ctx.fillStyle = "grey";
+        //ctx.fillRect(100, 50, 70, 70);
+        //ctx.fillStyle = "black";
+
+        var startx = 100;
+        var starty = 50;
+        var fontx = 105;
+        var fonty = 100;
+        for (var i = 0; i < 8; i++) {
+          ctx.strokeStyle = "rgba(0,0,0,1)";
+          ctx.strokeRect(startx, starty, 70, 70);
+          ctx.font = "50px Courier";
+          ctx.fillText(arr[i], fontx, fonty);
+          fontx = fontx + 70;
+          startx = startx + 70;
+        }
+      }
+    </script>
+  </head>
+  <body style="background-color: gray">
+    <center>
+      <div
+        style="
+          height: 600px;
+          width: 1000px;
+          background-color: lightgoldenrodyellow;
+        "
+      >
+        <canvas
+          id="board"
+          style="height: 250px; width: 800px; background-color: blanchedalmond"
+        ></canvas
+        ><br />
+        <p id="label1"></p>
+
+        <p id="label2"></p>
+        <br />
+
+        <input type="text" name="input" id="enter" required />
+        <br />
+        <input type="button" name="input" value="show" onclick="execute()" />
+        <input type="button" name="start" value="start" onclick="next()" />
+      </div>
+    </center>
+  </body>
+</html>
