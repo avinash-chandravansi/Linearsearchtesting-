@@ -1,7 +1,8 @@
 <html>
   <head>
     <script>
-      var arr = [45, 56, 67, 89, 67, 89, 67, 65];
+      var arr = [];
+      var length = 0;
 
       function next() {
         alert(
@@ -19,10 +20,11 @@
         canvas.width = canvas.getBoundingClientRect().width;
         canvas.height = canvas.getBoundingClientRect().height;
         var ctx = canvas.getContext("2d");
-        for (var i = 0; i < 8; i++) {
+
+        for (var i = 0; i < length; i++) {
           ctx.strokeStyle = "rgba(0,0,0,1)";
           ctx.strokeRect(startx, starty, 70, 70);
-          ctx.font = "50px Courier";
+          ctx.font = "30px Courier";
           ctx.fillText(arr[i], fontx, fonty);
           fontx = fontx + 70;
           startx = startx + 70;
@@ -36,7 +38,7 @@
         var resultx = 105;
         var resulty = 100;
 
-        for (var i = 0; i < 8; i++) {
+        for (var i = 0; i < length; i++) {
           setTimeout(() => {
             ctx.strokeStyle = "blanchedalmond";
             ctx.fillStyle = "blanchedalmond";
@@ -45,7 +47,7 @@
             ctx.strokeStyle = "rgba(0,0,0,1)";
             ctx.strokeRect(startx, starty + 80, 70, 70);
             ctx.fillStyle = "black";
-            ctx.font = "50px ";
+            ctx.font = "30px ";
             ctx.fillText(
               document.getElementById("enter").value,
               fontx,
@@ -54,7 +56,7 @@
             ctx.clearRect(startx - 70, starty, 70, 70);
             if (j != 0) {
               ctx.fillStyle = "black";
-              ctx.font = "50px Courier";
+              ctx.font = "30px Courier";
               ctx.fillText(arr[j - 1], fontx - 70, fonty);
             }
 
@@ -63,7 +65,7 @@
             ctx.strokeStyle = "rgba(0,0,0,1)";
             ctx.strokeRect(startx, starty, 70, 70);
             ctx.fillStyle = "black";
-            ctx.font = "50px ";
+            ctx.font = "30px ";
             ctx.fillText(arr[j], fontx, fonty);
 
             //here
@@ -78,7 +80,7 @@
                 "Element found at position at : " + (j + 1);
               document.getElementById("label2").style.color = "green";
               clearInterval(interval);
-            } else if (j != 7) {
+            } else if (j != length - 1) {
               document.getElementById("label2").innerHTML =
                 "Checking (if element(" +
                 document.getElementById("enter").value +
@@ -100,6 +102,9 @@
         }
       }
       function execute() {
+        length = parseInt(document.getElementById("length").value);
+        var str = document.getElementById("array").value;
+        arr = str.split(",");
         window.devicePixelRatio = 1;
         var canvas = document.getElementById("board");
         canvas.width = canvas.getBoundingClientRect().width;
@@ -113,10 +118,10 @@
         var starty = 50;
         var fontx = 105;
         var fonty = 100;
-        for (var i = 0; i < 8; i++) {
+        for (var i = 0; i < length; i++) {
           ctx.strokeStyle = "rgba(0,0,0,1)";
           ctx.strokeRect(startx, starty, 70, 70);
-          ctx.font = "50px Courier";
+          ctx.font = "30px Courier";
           ctx.fillText(arr[i], fontx, fonty);
           fontx = fontx + 70;
           startx = startx + 70;
@@ -133,16 +138,26 @@
           background-color: lightgoldenrodyellow;
         "
       >
-        <canvas
-          id="board"
-          style="height: 250px; width: 800px; background-color: blanchedalmond"
-        ></canvas
-        ><br />
+        <div style="width: 800px; overflow-y: auto">
+          <canvas
+            id="board"
+            style="
+              height: 250px;
+              width: 1500px;
+              background-color: blanchedalmond;
+              overflow: visible;
+            "
+          ></canvas>
+        </div>
+        <br />
         <p id="label1"></p>
 
         <p id="label2"></p>
         <br />
-
+        Enter Length:
+        <input type="text" id="length" />
+        Enter array: <input type="text" id="array" /> <br />
+        Enter the element to find :
         <input type="text" name="input" id="enter" required />
         <br />
         <input type="button" name="input" value="show" onclick="execute()" />
